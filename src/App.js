@@ -1,7 +1,8 @@
 import React, { Suspense, useEffect, useRef, useState, useMemo } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useGLTF, useTexture, Loader, Environment, useFBX, useAnimations, OrthographicCamera } from '@react-three/drei';
 import { MeshStandardMaterial } from 'three/src/materials/MeshStandardMaterial';
+import { OrbitControls } from '@react-three/drei';
 
 import { LinearEncoding, sRGBEncoding } from 'three/src/constants';
 import { LineBasicMaterial, MeshPhysicalMaterial, Vector2 } from 'three';
@@ -342,9 +343,9 @@ function App() {
       position={[0, 1.65, 1]}
       />
 
-      {/* <OrbitControls
+      <OrbitControls
         target={[0, 1.65, 0]}
-      /> */}
+      />
 
       <Suspense fallback={null}>
         <Environment background={false} files="/images/photo_studio_loft_hall_1k.hdr" />
@@ -379,16 +380,28 @@ function App() {
 }
 
 function Bg() {
-  
-  const texture = useTexture('/images/bg.webp');
+  const {scene} =  useThree();
+  const texture = useTexture('/images/sky.jpg');
 
-  return(
-    <mesh position={[0, 1.5, -2]} scale={[0.8, 0.8, 0.8]}>
+  scene.background = texture; 
+
+  return(<>
+    {/* <mesh position={[0, 1.5, -2]} scale={[0.8, 0.8, 0.8]}>
       <planeBufferGeometry />
-      <meshBasicMaterial map={texture} />
+      <meshBasicMaterial map={texture} side={THREE.DoubleSide}/>
 
-    </mesh>
-  )
+    </mesh> */}
+    {/* <mesh
+    visible
+    userData={{ hello: 'world' }}
+    position={new THREE.Vector3(0, 1.5, -3)}
+    rotation={new THREE.Euler(Math.PI / 2, 0, 0)}
+    geometry={new THREE.SphereGeometry(4, 16, 16)}
+    // material={new THREE.MeshBasicMaterial({ color: new THREE.Color('hotpink'), transparent: true })}
+    material={new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide })}
+  /> */}
+    
+  </>)
 
 }
 
