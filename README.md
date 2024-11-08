@@ -19,3 +19,4 @@ $ yarn start
 You'll also need https://github.com/bornfree/talking_avatar_backend for the text to speech conversion.
 
 
+[ArwinVideo.webm](https://github.com/user-attachments/assets/ccbf923d-33aa-4df9-affd-7f3d8ec7b4ab)
