@@ -3,7 +3,7 @@
 
 A ThreeJS-powered virtual human being that uses a set of neat [Azure APIs](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/how-to-speech-synthesis-viseme) to do some talking!
 
-[ta.webm](https://github.com/frozzel/TALKING_AVATAR-MAIN/blob/bf18778db3ead483ba3160887c30ab894d977353/public/images/ArwinVideo.webm)
+[ta.webm](https://github.com/frozzel/TALKING_AVATAR-MAIN/blob/1c19d62ab37d5dd8aa4d0fae6807efb68d90b422/public/images/ArwinVideo.webm)
 
 
 Add Chat GPT to the mix and maybe you can have for yourself a nice face to chat with. 🙂
