@@ -49,7 +49,7 @@ function Avatar({ avatar_url, speak, setSpeak, text, setAudioSource, playing }) 
     "/images/teeth_normal.webp",
     // "/images/teeth_specular.webp",
     "/images/h_color.webp",
-    "/images/tshirt_diffuse.webp",
+    "/images/tshirt_diffuse.png",
     "/images/tshirt_normal.webp",
     "/images/tshirt_roughness.webp",
     "/images/h_alpha.webp",
@@ -339,7 +339,7 @@ function App() {
 
       <OrthographicCamera 
       makeDefault
-      zoom={2000}
+      zoom={1800}
       position={[0, 1.65, 1]}
       />
 
