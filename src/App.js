@@ -17,7 +17,7 @@ const _ = require('lodash');
 
 const host = 'http://localhost:8080'
 
-function Avatar({ avatar_url, speak, setSpeak, text, setAudioSource, playing }) {
+function Avatar({ avatar_url, speak, setSpeak, text, setAudioSource, playing, intro, message, setIntro }) {
 
   let gltf = useGLTF(avatar_url);
   let morphTargetDictionaryBody = null;
@@ -215,6 +215,36 @@ function Avatar({ avatar_url, speak, setSpeak, text, setAudioSource, playing }) 
 
   }, [speak]);
 
+  useEffect(() => {
+
+    if (intro === false)
+      return;
+
+    makeSpeech2(message)
+    .then( response => {
+
+      let {blendData, filename}= response.data;
+
+      let newClips = [ 
+        createAnimation(blendData, morphTargetDictionaryBody, 'HG_Body'), 
+        createAnimation(blendData, morphTargetDictionaryLowerTeeth, 'HG_TeethLower') ];
+
+      filename = host + filename;
+        
+      setClips(newClips);
+      setAudioSource(filename);
+      setIntro(false);
+
+    })
+    .catch(err => {
+      console.error(err, "Error in making speech");
+      setIntro(false);
+      setSpeak(false);
+
+    })
+
+  }, [speak]);
+
   let idleFbx = useFBX('/idle.fbx');
   let { clips: idleClips } = useAnimations(idleFbx.animations);
 
@@ -285,22 +315,65 @@ function makeSpeech(text) {
   return axios.post(host + '/talk', { text });
 }
 
+function makeSpeech2(text) {
+  return axios.post(host + '/talk2', { text });
+}
+
 const STYLES = {
-  area: {position: 'absolute', bottom:'10px', left: '10px', zIndex: 500},
+  area: {position: 'absolute', bottom:'10px', left: '10px', zIndex: 500, display: 'flex', flexDirection: 'column'},
   text: {margin: '0px', width:'300px', padding: '5px', background: 'none', color: '#ffffff', fontSize: '1.2em', border: 'none'},
-  speak: {padding: '10px', marginTop: '5px', display: 'block', color: '#FFFFFF', background: '#222222', border: 'None'},
+  question: {margin: '0px', width:'300px', padding: '5px', background: 'none', color: '#DC9BD4', fontSize: '1.2em', border: 'none'},
+  speak: {padding: '10px', marginTop: '5px', display: 'block', color: '#FFFFFF', background: '#222222', border: 'None', maxWidth: '80px'},
   area2: {position: 'absolute', top:'5px', right: '15px', zIndex: 500},
   label: {color: '#777777', fontSize:'0.8em'}
 }
 
 function App() {
-
+  const [message, setMessage] = useState("My name is Arwen. I'm a AI virtual assistant who can help you with your questions. Click speak to start a conversation.");
   const audioPlayer = useRef();
-
+  const [intro, setIntro] = useState(true);
   const [speak, setSpeak] = useState(false);
-  const [text, setText] = useState("My name is Arwen. I'm a virtual human who can speak whatever you type here along with realistic facial movements.");
+  const [text, setText] = useState("👇👇👇👇");
   const [audioSource, setAudioSource] = useState(null);
   const [playing, setPlaying] = useState(false);
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+
+  const handleListen = async () => {
+    setMessage('Listening...');
+    console.log(message)
+  
+    var quest = null
+  
+    if (!recognition.running) {
+      recognition.start();
+      recognition.onstart = () => {
+        setMessage('Voice recognition started. Speak into the microphone.');
+      };
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setMessage('Voice recognition result:', transcript);
+        quest = transcript;
+      };
+      recognition.onend =  () => {
+        setMessage('Voice recognition ended.');
+        
+        //  setQuestion(quest)
+        
+        // fetchChatGpt(quest)
+
+        setText(quest);
+        setSpeak(true);
+  
+      };
+      
+      } else {
+        recognition.stop();
+        setMessage('Voice recognition stopped. Click on the Microphone logo to start again.');
+    }
+    
+  };
 
   // End of play
   function playerEnded(e) {
@@ -319,8 +392,11 @@ function App() {
   return (
     <div className="full">
       <div style={STYLES.area}>
-        <textarea rows={4} type="text" style={STYLES.text} value={text} onChange={(e) => setText(e.target.value.substring(0, 200))} />
-        <button onClick={() => setSpeak(true)} style={STYLES.speak}> { speak? 'Running...': 'Speak' }</button>
+        <textarea rows={4} type="text" style={STYLES.text} value={message} onChange={(e) => setText(e.target.value.substring(0, 200))} />
+        <textarea rows={4} type="text" style={STYLES.question} value={text} onChange={(e) => setText(e.target.value.substring(0, 200))} />
+        {/* <button onClick={() => setSpeak(true)} style={STYLES.speak}> { speak? 'Running...': 'Speak' }</button> */}
+        <button onClick={() => handleListen()} style={STYLES.speak}> { speak? 'Running...': 'Speak' }</button>
+
 
       </div>
 
@@ -366,6 +442,9 @@ function App() {
             text={text}
             setAudioSource={setAudioSource}
             playing={playing}
+            intro={intro}
+            message={message}
+            setIntro={setIntro}
             />
 
       
