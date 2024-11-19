@@ -10,7 +10,6 @@ This MERN (MongoDB, Express.js, React.js, Node.js) application integrates an Azu
 
 [![Github license](https://img.shields.io/badge/Client-0275d8.svg)](https://github.com/frozzel/TALKING_AVATAR-MAIN)   [![Github license](https://img.shields.io/badge/Server-0275d8.svg)](https://github.com/frozzel/TALKING_AVATAR_BACKEND-MAIN) 
 
----
 
 ## Features
 
@@ -47,14 +46,14 @@ This MERN (MongoDB, Express.js, React.js, Node.js) application integrates an Azu
 
 1. Clone the repository:
 
-``` shell
+``` console
 git clone <repository-url>
 cd <repository-folder>
 ```
 
 2. Install dependencies:
 
-``` shell
+``` console
 npm install
 cd client
 npm install
@@ -65,23 +64,23 @@ cd ..
 
 - Create a .env file in the root directory with: env
 React:
-``` bash
+``` .env
 REACT_APP_ALTER_API=
 ```
 Server:
-``` bash
+``` .env
 AZURE_KEY=
 AZURE_REGION=
 OPENAI_API_KEY=
 ```
 4. Start the application:
 Server:
-``` bash
+``` console
 npm run dev
 ```
 
 React:
-```bash
+``` console
 npm run start
 ```
 ---
@@ -115,5 +114,5 @@ Feel free to contribute to this project or reach out for support!
 You'll also need https://github.com/bornfree/talking_avatar_backend for the text to speech conversion.
 The text to speech and blendShapes converter for https://github.com/bornfree/talking_avatar.
 
->[!DANGER]
->Resources for avatar only no chat gpt integration
+>[!CAUTION]
+> Resources for avatar only no chat gpt integration
