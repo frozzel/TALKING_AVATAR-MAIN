@@ -26,7 +26,7 @@ This MERN (MongoDB, Express.js, React.js, Node.js) application integrates an Azu
 - Contextual Conversations: Maintains context for multi-turn dialogue, making interactions feel seamless and human-like.
 
 >[!NOTE]
-> Open Ai Documentation [Chat Gpt](https://platform.openai.com/docs/overview)
+> Open Ai Documentation [API DOC](https://platform.openai.com/docs/overview)
 
 ### Seamless Integration
 - Real-Time Processing: Combines Azure avatar rendering with ChatGPT processing for smooth, real-time conversations.
