@@ -15,7 +15,8 @@ import * as THREE from 'three';
 import axios from 'axios';
 const _ = require('lodash');
 
-const host = 'http://localhost:8080'
+const host = process.env.REACT_APP_ROUTER_API;
+const host2 = process.env.REACT_APP_ROUTER_BASE;
 
 function Avatar({ avatar_url, speak, setSpeak, text, setAudioSource, playing, intro, message, setIntro }) {
 
@@ -201,7 +202,7 @@ function Avatar({ avatar_url, speak, setSpeak, text, setAudioSource, playing, in
         createAnimation(blendData, morphTargetDictionaryBody, 'HG_Body'), 
         createAnimation(blendData, morphTargetDictionaryLowerTeeth, 'HG_TeethLower') ];
 
-      filename = host + filename;
+      filename = host2 + filename;
         
       setClips(newClips);
       setAudioSource(filename);
@@ -229,7 +230,7 @@ function Avatar({ avatar_url, speak, setSpeak, text, setAudioSource, playing, in
         createAnimation(blendData, morphTargetDictionaryBody, 'HG_Body'), 
         createAnimation(blendData, morphTargetDictionaryLowerTeeth, 'HG_TeethLower') ];
 
-      filename = host + filename;
+      filename = host2 + filename;
         
       setClips(newClips);
       setAudioSource(filename);
@@ -342,7 +343,7 @@ function App() {
 
   const handleListen = async () => {
     setMessage('Listening...');
-    console.log(message)
+    // console.log(message)
   
     var quest = null
   

@@ -66,6 +66,8 @@ cd ..
 React:
 ``` .env
 REACT_APP_ALTER_API=
+REACT_APP_ROUTER_BASE=http://localhost:8080/
+REACT_APP_ROUTER_API=http://localhost:8080/api/avatar
 ```
 Server:
 ``` .env
